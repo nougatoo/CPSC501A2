@@ -6,11 +6,13 @@ import java.lang.reflect.Modifier;
 public class Inspector {
 	
 	Object object = null;
-	Class classObject = null;
+
 	Class[] tempClassList;
 	
 	public void inspect(Object obj, boolean recursive )
 	{
+		Class classObject;
+		
 		int mods;
 		/*
 		 * Gets: 
@@ -61,71 +63,15 @@ public class Inspector {
 			}
 			
 
-			System.out.println("---------------------------------------------------------");
+			
 			
 			/*
 			 * Gets the methods and prints out the info required
 			 */
-			Method[] listOfMethods = classObject.getDeclaredMethods();		
-			for(int i = 0; i<listOfMethods.length;i++)
-			{
-
-				System.out.println("Name of method " + (i+1) + ": " + listOfMethods[i].getName());
-				
-				/*
-				 * Exceptions info
-				 */
-				tempClassList = listOfMethods[i].getExceptionTypes(); //tempList holds the exceptions right now	
-				
-				//Prints a small message if there are no exceptions
-				if(tempClassList.length == 0)
-					System.out.println("\tThere are no exceptions");
-				
-				//Loop to print out all the Exceptions
-				for(int j = 0; j<tempClassList.length;j++)
-				{
-					if(j == 0)
-						System.out.println("\tExceptions:");
-					System.out.println("\t\tName of exception " + (j+1) + ": " + tempClassList[j].getName());
-					
-				}
-								
-				
-				/*
-				 * Parameter info
-				 */
-				tempClassList = listOfMethods[i].getParameterTypes(); //tempList now holds list of parameters
-				
-				//Prints a small message if there are no exceptions
-				if(tempClassList.length == 0)
-					System.out.println("\tThere are no parameters");
-				
-				//Loop to print out all the parameters
-				for(int j = 0; j<tempClassList.length;j++)
-				{
-					if(j == 0)
-						System.out.println("\tParameters:");
-					System.out.println("\t\tType of parameter " + (j+1) + ": " + tempClassList[j].getName());				
-				}
-				
-				/*
-				 * Return type info
-				 */
-						
-				System.out.println("\tReturn type: " + listOfMethods[i].getReturnType().getName());
-				
-				
-				/*
-				 * Modifier info
-				 */
-				
-				System.out.println("\tModifiers: " + Modifier.toString(listOfMethods[i].getModifiers()));
-				
-				System.out.println();
-								
-			}
 			
 			System.out.println("---------------------------------------------------------");
+			
+			inspectMethods(classObject);
 			
 			/*
 			 * Prints out all the information about constructors
@@ -166,6 +112,72 @@ public class Inspector {
 			System.out.println("---------------------------------------------------------");
 			
 
+	}
+	
+	private void inspectMethods(Class classObject)
+	{
+		
+		Method[] listOfMethods = classObject.getDeclaredMethods();		
+		for(int i = 0; i<listOfMethods.length;i++)
+		{
+
+			System.out.println("Name of method " + (i+1) + ": " + listOfMethods[i].getName());
+			
+			/*
+			 * Exceptions info
+			 */
+			tempClassList = listOfMethods[i].getExceptionTypes(); //tempList holds the exceptions right now	
+			
+			//Prints a small message if there are no exceptions
+			if(tempClassList.length == 0)
+				System.out.println("\tThere are no exceptions");
+			
+			//Loop to print out all the Exceptions
+			for(int j = 0; j<tempClassList.length;j++)
+			{
+				if(j == 0)
+					System.out.println("\tExceptions:");
+				System.out.println("\t\tName of exception " + (j+1) + ": " + tempClassList[j].getName());
+				
+			}
+							
+			
+			/*
+			 * Parameter info
+			 */
+			tempClassList = listOfMethods[i].getParameterTypes(); //tempList now holds list of parameters
+			
+			//Prints a small message if there are no exceptions
+			if(tempClassList.length == 0)
+				System.out.println("\tThere are no parameters");
+			
+			//Loop to print out all the parameters
+			for(int j = 0; j<tempClassList.length;j++)
+			{
+				if(j == 0)
+					System.out.println("\tParameters:");
+				System.out.println("\t\tType of parameter " + (j+1) + ": " + tempClassList[j].getName());				
+			}
+			
+			/*
+			 * Return type info
+			 */
+					
+			System.out.println("\tReturn type: " + listOfMethods[i].getReturnType().getName());
+			
+			
+			/*
+			 * Modifier info
+			 */
+			
+			System.out.println("\tModifiers: " + Modifier.toString(listOfMethods[i].getModifiers()));
+			
+			System.out.println();
+							
+		}
+		
+		
+		
 	}
 
 }
