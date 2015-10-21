@@ -1,3 +1,4 @@
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -6,7 +7,7 @@ public class Inspector {
 	
 	Object object = null;
 	Class classObject = null;
-	Class[] tempList;
+	Class[] tempClassList;
 	
 	public void inspect(Object obj, boolean recursive )
 	{
@@ -41,20 +42,26 @@ public class Inspector {
 			 */
 			System.out.println("Name of the object: " + classObject.getName());
 			
+			System.out.println("---------------------------------------------------------");
+			
 			/*
 			 * Name of immediate super class
 			 */
 			System.out.println("Name of the immediate super class: " + classObject.getSuperclass().getName());
 			
+			System.out.println("---------------------------------------------------------");
+			
 			/*
 			 * Name of the interfaces the class implements
 			 */
-			tempList = classObject.getInterfaces();
-			for(int i = 0; i<tempList.length;i++)
+			tempClassList = classObject.getInterfaces();
+			for(int i = 0; i<tempClassList.length;i++)
 			{
-				System.out.println("Name of interface " + (i+1) + ": " + tempList[i].getName());
+				System.out.println("Name of interface " + (i+1) + ": " + tempClassList[i].getName());
 			}
 			
+
+			System.out.println("---------------------------------------------------------");
 			
 			/*
 			 * Gets the methods and prints out the info required
@@ -68,18 +75,18 @@ public class Inspector {
 				/*
 				 * Exceptions info
 				 */
-				tempList = listOfMethods[i].getExceptionTypes(); //tempList holds the exceptions right now	
+				tempClassList = listOfMethods[i].getExceptionTypes(); //tempList holds the exceptions right now	
 				
 				//Prints a small message if there are no exceptions
-				if(tempList.length == 0)
+				if(tempClassList.length == 0)
 					System.out.println("\tThere are no exceptions");
 				
 				//Loop to print out all the Exceptions
-				for(int j = 0; j<tempList.length;j++)
+				for(int j = 0; j<tempClassList.length;j++)
 				{
 					if(j == 0)
 						System.out.println("\tExceptions:");
-					System.out.println("\t\tName of exception " + (j+1) + ": " + tempList[j].getName());
+					System.out.println("\t\tName of exception " + (j+1) + ": " + tempClassList[j].getName());
 					
 				}
 								
@@ -87,18 +94,18 @@ public class Inspector {
 				/*
 				 * Parameter info
 				 */
-				tempList = listOfMethods[i].getParameterTypes(); //tempList now holds list of parameters
+				tempClassList = listOfMethods[i].getParameterTypes(); //tempList now holds list of parameters
 				
 				//Prints a small message if there are no exceptions
-				if(tempList.length == 0)
+				if(tempClassList.length == 0)
 					System.out.println("\tThere are no parameters");
 				
 				//Loop to print out all the parameters
-				for(int j = 0; j<tempList.length;j++)
+				for(int j = 0; j<tempClassList.length;j++)
 				{
 					if(j == 0)
 						System.out.println("\tParameters:");
-					System.out.println("\t\tType of parameter " + (j+1) + ": " + tempList[j].getName());				
+					System.out.println("\t\tType of parameter " + (j+1) + ": " + tempClassList[j].getName());				
 				}
 				
 				/*
@@ -113,8 +120,50 @@ public class Inspector {
 				 */
 				
 				System.out.println("\tModifiers: " + Modifier.toString(listOfMethods[i].getModifiers()));
+				
+				System.out.println();
 								
 			}
+			
+			System.out.println("---------------------------------------------------------");
+			
+			/*
+			 * Prints out all the information about constructors
+			 */
+			Constructor[] listOfConstructors = classObject.getDeclaredConstructors();
+			for(int i = 0; i<listOfConstructors.length;i++)
+			{
+				
+				System.out.println("Constructor " + (i+1) + ":");
+				
+				/*
+				 * Constructor Parameter info
+				 */
+				tempClassList =listOfConstructors[i].getParameterTypes(); //tempList now holds list of parameters
+				
+				//Prints a small message if there are no exceptions
+				if(tempClassList.length == 0)
+					System.out.println("\tNo Parameter Constructor");
+				
+				//Loop to print out all the parameters
+				for(int j = 0; j<tempClassList.length;j++)
+				{
+					if(j == 0)
+						System.out.println("\tParameters:");
+					System.out.println("\t\tType of parameter " + (j+1) + ": " + tempClassList[j].getName());				
+				}
+				
+				
+				/*
+				 * Modifier info
+				 */
+				
+				System.out.println("\tModifiers: " + Modifier.toString(listOfConstructors[i].getModifiers()));
+				
+				System.out.println();
+			}
+			
+			System.out.println("---------------------------------------------------------");
 			
 
 	}
