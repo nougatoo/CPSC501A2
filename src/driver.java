@@ -6,8 +6,17 @@ public class driver {
 		
 		Inspector i = new Inspector();
 		TestClass t1 = new TestClass();
+		ClassD d1 = new ClassD();
+		ClassB b1 = null;
+		try {
+			b1 = new ClassB();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		i.inspect(t1, false);
+		
+		i.inspect(t1, true);
 
 	}
 
