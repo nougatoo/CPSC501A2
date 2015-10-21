@@ -16,7 +16,7 @@ public class driver {
 		}
 		
 		
-		i.inspect(t1, true);
+		i.inspect(d1, true);
 
 	}
 

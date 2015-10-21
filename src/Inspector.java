@@ -25,14 +25,14 @@ public class Inspector {
 
 	
 	boolean inspecInspec;
-	//private Inspector i = new Inspector();
+	private Inspector i;
 	private String[] alreadyDone = new String[2];
 	private int doneNextEmptyIndex = 0;
 	private Object object;
 	private Object[] objectInspecQueue = new Object[10];
 	private String[] objInspected = new String[100];
 	int objInspectedNextEmpty = 0;
-	int lastOIQIndex = 1;
+	int lastOIQIndex = 0;
 	int methodNumber; 
 	int constructorNumber;
 	int fieldNumber;
@@ -48,7 +48,7 @@ public class Inspector {
 	
 	public void inspect(Object obj, boolean recursive )
 	{
-		lastOIQIndex--;
+		//lastOIQIndex--;
 		methodNumber = 0;
 		constructorNumber = 0;
 		fieldNumber = 0;
@@ -152,6 +152,7 @@ public class Inspector {
 	
 	private void inspectObjectQueue()
 	{
+		Inspector test;
 		int temp = lastOIQIndex;
 		while(lastOIQIndex > 0)
 		{
@@ -160,9 +161,11 @@ public class Inspector {
 			//System.out.println(objectInspecQueue[lastOIQIndex-1].getClass().getName());
 			doneNextEmptyIndex++;
 			
-			Inspector test = new Inspector(beenAdded, index);
-			test.inspect(objectInspecQueue[lastOIQIndex-1], true);
-			lastOIQIndex--;
+			inspect(objectInspecQueue[--lastOIQIndex], true);
+			recursingNow = true;
+			//test = new Inspector(beenAdded, index);
+			//test.inspect(objectInspecQueue[--lastOIQIndex], true);
+			//lastOIQIndex--;
 
 		}	
 		
@@ -244,7 +247,7 @@ public class Inspector {
 				{
 					
 					try{
-						if(Arrays.asList(beenAdded).contains(listOfFields[i].get(object).getClass()) || (listOfFields[i].getType().getName() == "Inspector" && inspecInspec == true))
+						if(Arrays.asList(beenAdded).contains(listOfFields[i].get(object).getClass()))
 						{
 							System.out.println("\tAlready been inspected");
 						}
