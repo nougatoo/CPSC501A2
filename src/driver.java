@@ -6,6 +6,8 @@ public class driver {
 		
 		Inspector i = new Inspector();
 		TestClass t1 = new TestClass();
+		//t1.Method2();
+		TestClass2 t2 = new TestClass2();
 		ClassD d1 = new ClassD();
 		ClassB b1 = null;
 		try {
@@ -15,8 +17,7 @@ public class driver {
 			e.printStackTrace();
 		}
 		
-		
-		i.inspect(d1, true);
+		i.inspect(t1, true);
 
 	}
 

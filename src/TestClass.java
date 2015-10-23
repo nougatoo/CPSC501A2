@@ -57,7 +57,6 @@ public class TestClass implements Serializable, Runnable, Comparable{
 	
 	public void Method2()
 	{
-		
 	}
 
 
